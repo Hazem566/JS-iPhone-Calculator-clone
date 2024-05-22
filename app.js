@@ -25,23 +25,24 @@ const screen = document.querySelector(".screen");
 const numbers = document.querySelectorAll("[data-number]");
 const operators = document.querySelectorAll("[data-operation]");
 
-const allClearBtn = document.querySelector("[data-equals]");
+const allClearBtn = document.querySelector("[data-all-clear]");
 const negativeBtn = document.querySelector("[data-negative]");
 const percentBtn = document.querySelector("[data-percent]");
 const equalsBtn = document.querySelector("[data-equals]");
 const decimalBtn = document.querySelector("[data-decimal]");
 
-// ÷
+/* ÷ */
 
 class Calculator {
-    constructor(screen, allClear) {
+    constructor(screen, allClear, operationBtns) {
         this.screen = screen;
         this.allClear = allClear;
+        this.operators = operationBtns;
         
         this.current = "";
         this.previous = "";
         this.op = undefined;
-        this.addZero();
+        this.updates();
     }
     updateScreenFont() {
         const len = this.current.split(".").join("").length;
@@ -58,6 +59,7 @@ class Calculator {
         }
     }
     updates() {
+        this.addZero();
         this.updateScreenFont();
     }
     addZero() {
@@ -67,6 +69,26 @@ class Calculator {
         return this.screen.innerText.split(",").join("");
     }
     setValue(value) {
+        if(value === "-") {
+            const curr = this.getClearInt();
+            const [int, dec] = curr.split(".");
+            if(curr.at() !== "-") {
+                if(dec) {
+                    this.screen.innerText = `-${parseFloat(int).toLocaleString()}.${dec}`;
+                } else {
+                    this.screen.innerText = `-${parseFloat(int).toLocaleString()}`;
+                }
+            } else {
+                if(dec) {
+                    this.screen.innerText = `${parseFloat(int.slice(1)).toLocaleString()}.${dec}`;
+                } else {
+                    this.screen.innerText = `${parseFloat(int.slice(1)).toLocaleString()}`;
+                }
+            }
+            
+            return;
+        }
+         
         if(value.includes("e")) {
             this.screen.innerText = value;
             return;
@@ -88,15 +110,75 @@ class Calculator {
         this.setValue(this.current);
         this.updates();
     }
-
     makeItPercent() {
         this.current = (this.current / 100).toString();
         this.setValue(this.current);
         this.updates();
     }
+    clear() {
+        if(this.current === "") {
+            this.previous = "";
+            this.op = undefined;
+            this.operators.forEach(op=>op.classList.remove("active__op"));
+        } else {
+            this.current = "";
+            this.updates();
+        }
+    }
+    makeItNegative() {
+        this.setValue("-");
+    }
+    calcValue() {
+        let final;
+        const currentValue = parseFloat(this.screen.innerText.split(",").join(""));
+
+        console.log(this.op);
+        console.log(this.previous);
+        console.log(currentValue);
+
+        switch(this.op) {
+            case "÷" :
+                final = parseFloat(this.previous) / currentValue;
+                break;
+            case "-":
+                final = parseFloat(this.previous) - currentValue;
+                break;
+            case "x":
+                final = parseFloat(this.previous) * currentValue;
+                break;
+            case "+":
+                final = parseFloat(this.previous) + currentValue;
+                break;
+        }
+        return final.toString();
+    }
+    addOperation(value) {
+        if(this.previous === "" && this.op === undefined) {
+            this.previous = this.current;
+            this.current = "";
+            this.op = value;
+        } else {
+            const sumValue = this.calcValue();
+            this.op = value;
+            this.previous = sumValue.toString();
+            this.current = "";
+            this.setValue(this.previous);
+        }
+    }
+    getEqual() {
+        if(this.op && this.previous) {
+            this.current = this.calcValue();
+            this.previous = "";
+            this.op = undefined;
+            this.operators.forEach(op=>op.classList.remove("active__op"));
+            this.setValue(this.current);
+            this.updates();
+        }
+    }
+
 }
 
-const calc = new Calculator(screen, allClearBtn);
+const calc = new Calculator(screen, allClearBtn, operators);
 
 numbers.forEach(num => {
     num.addEventListener("click", e => {
@@ -114,11 +196,18 @@ operators.forEach(op => {
         let value = e.target.innerText;
         operators.forEach(op=>op.classList.remove("active__op"));
         e.target.classList.add("active__op");
+        calc.addOperation(value);
     });
 });
 percentBtn.onclick = _ => {
     calc.makeItPercent();
 }
-
-
-
+allClearBtn.onclick = _ => {
+    calc.clear();
+}
+negativeBtn.onclick = _ => {
+    calc.makeItNegative();
+}
+equalsBtn.onclick = _ => {
+    calc.getEqual();
+}
