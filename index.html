@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatble" content="IE-edge" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <title>iPhone Calculator clone</title>
+</head>
+<body>
+    <div id="project__container">
+        <header>
+            <div class="time"></div>
+            <div class="state">
+                <img src="./assets/status.png" alt="mobaile status" />
+            </div>
+        </header>
+        <div class="calculator__container">
+            <div class="screen"></div>
+            <div class="buttons__container">
+                <div class="buttons__row">
+                    <button type="button" class="btn" data-all-clear>AC</button>
+                    <button type="button" class="btn" data-negative>
+                        <span>+</span><span>/</span><span>-</span>
+                    </button>
+                    <button type="button" class="btn" data-percent>%</button>
+                    <button type="button" class="btn" data-operation>÷</button>
+                </div>
+                <div class="buttons__row">
+                    <button type="button" class="btn" data-number>7</button>
+                    <button type="button" class="btn" data-number>8</button>
+                    <button type="button" class="btn" data-number>9</button>
+                    <button type="button" class="btn" data-operation>&times;</button>
+                </div>
+                <div class="buttons__row">
+                    <button type="button" class="btn" data-number>4</button>
+                    <button type="button" class="btn" data-number>5</button>
+                    <button type="button" class="btn" data-number>6</button>
+                    <button type="button" class="btn" data-operation>-</button>
+                </div>
+                <div class="buttons__row">
+                    <button type="button" class="btn" data-number>1</button>
+                    <button type="button" class="btn" data-number>2</button>
+                    <button type="button" class="btn" data-number>3</button>
+                    <button type="button" class="btn" data-operation>+</button>
+                </div>
+                <div class="buttons__row">
+                    <button type="button" class="btn" data-number>0</button>
+                    <button type="button" class="btn" data-decimal>.</button>
+                    <button type="button" class="btn" data-equals>=</button>
+                </div>
+            </div>
+        </div>
+        <div class="underline"></div>
+    </div>
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
