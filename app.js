@@ -44,9 +44,14 @@ class Calculator {
         this.op = undefined;
         this.updates();
     }
+    // Change all clear button inner text
+    changeAllClear() {
+        if(this.current !== "") this.allClear.innerText = "C";
+        else this.allClear.innerText = "AC";
+    }
     updateScreenFont() {
-        const len = this.current.split(".").join("").length;
-        const int = this.current.split(".")[0].length;
+        const len = this.screen.innerText.split(".").join("").length;
+        const int = this.screen.innerText.split(".")[0].length;
         if(len === 7) {
             if(int < 4) this.screen.style.fontSize = "3.7rem";
             else if(int > 4) this.screen.style.fontSize = "3.6rem";
@@ -58,12 +63,13 @@ class Calculator {
             else if(int > 4) this.screen.style.fontSize = "2.9rem";
         }
     }
+    addZero() {
+        if(this.current === "") this.screen.innerText = "0";
+    }
     updates() {
         this.addZero();
         this.updateScreenFont();
-    }
-    addZero() {
-        if(this.current === "") this.screen.innerText = "0";
+        this.changeAllClear();
     }
     getClearInt() {
         return this.screen.innerText.split(",").join("");
@@ -88,7 +94,15 @@ class Calculator {
             
             return;
         }
-         
+        if(value === ".") {
+            this.current = "0.";
+            this.screen.innerText = this.current;
+            return;
+        }
+        if(value.at(-1) === ".") {
+            this.screen.innerText = parseFloat(value).toLocaleString()+".";
+            return;
+        }
         if(value.includes("e")) {
             this.screen.innerText = value;
             return;
@@ -103,10 +117,8 @@ class Calculator {
     addNumber(value) {
         const len = this.current.split(".").join("").length;
         if(len === 9) return;
-        if(this.current === "") {
-            if(value === ".") this.current = "0.";
-            else this.current = value;
-        } else this.current += value;
+        if(this.current === "") this.current = value;
+        else this.current += value;
         this.setValue(this.current);
         this.updates();
     }
@@ -124,18 +136,14 @@ class Calculator {
             this.current = "";
             this.updates();
         }
+        this.changeAllClear();
     }
     makeItNegative() {
         this.setValue("-");
     }
     calcValue() {
         let final;
-        const currentValue = parseFloat(this.screen.innerText.split(",").join(""));
-
-        console.log(this.op);
-        console.log(this.previous);
-        console.log(currentValue);
-
+        const currentValue = parseFloat(this.current || 0);
         switch(this.op) {
             case "÷" :
                 final = parseFloat(this.previous) / currentValue;
@@ -143,18 +151,26 @@ class Calculator {
             case "-":
                 final = parseFloat(this.previous) - currentValue;
                 break;
-            case "x":
+            case "×":
                 final = parseFloat(this.previous) * currentValue;
                 break;
             case "+":
                 final = parseFloat(this.previous) + currentValue;
                 break;
         }
-        return final.toString();
+        const len = final.toString().split(".").join("").length;
+        if(final.toString().includes(".")){
+            const int = final.toString().split(".")[0];
+            if(len > 9 && int.length < 9) {
+                const decLen = 9 - int.length;
+                final = final.toFixed(decLen);
+            }
+        }
+        return parseFloat(final).toString();
     }
     addOperation(value) {
         if(this.previous === "" && this.op === undefined) {
-            this.previous = this.current;
+            this.previous = this.current || 0;
             this.current = "";
             this.op = value;
         } else {
@@ -164,6 +180,7 @@ class Calculator {
             this.current = "";
             this.setValue(this.previous);
         }
+        this.updateScreenFont();
     }
     getEqual() {
         if(this.op && this.previous) {
@@ -187,7 +204,7 @@ numbers.forEach(num => {
     });
 });
 decimalBtn.onclick = _ => {
-    let value = screen.innerText;
+    let value = calc.current;
     if(value.includes(".")) return;
     calc.addNumber(".");
 }
