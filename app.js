@@ -143,7 +143,7 @@ class Calculator {
     }
     calcValue() {
         let final;
-        const currentValue = parseFloat(this.current || 0);
+        const currentValue = parseFloat(this.getClearInt());
         switch(this.op) {
             case "÷" :
                 final = parseFloat(this.previous) / currentValue;
