@@ -80,18 +80,18 @@ class Calculator {
             const [int, dec] = curr.split(".");
             if(curr.at() !== "-") {
                 if(dec) {
-                    this.screen.innerText = `-${parseFloat(int).toLocaleString()}.${dec}`;
+                    this.current = `-${parseFloat(int).toLocaleString()}.${dec}`;
                 } else {
-                    this.screen.innerText = `-${parseFloat(int).toLocaleString()}`;
+                    this.current = `-${parseFloat(int).toLocaleString()}`;
                 }
             } else {
                 if(dec) {
-                    this.screen.innerText = `${parseFloat(int.slice(1)).toLocaleString()}.${dec}`;
+                    this.current = `${parseFloat(int.slice(1)).toLocaleString()}.${dec}`;
                 } else {
-                    this.screen.innerText = `${parseFloat(int.slice(1)).toLocaleString()}`;
+                    this.current = `${parseFloat(int.slice(1)).toLocaleString()}`;
                 }
             }
-            
+            this.screen.innerText = this.current;
             return;
         }
         if(value === ".") {
