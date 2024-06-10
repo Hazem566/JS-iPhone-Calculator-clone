@@ -1,3 +1,3 @@
 # JS-iPhone-Calculator-clone
 
-## [Go Live](https://js-iphone-calculator-clone-aouattqba-hazems-projects-02629cfb.vercel.app/)
+## [Go Live](https://js-i-phone-calculator-clone.vercel.app/)
