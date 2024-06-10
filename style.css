@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
     --main-font-family: "Poppins", sans-serif;
 }
+
 *,
 *::after,
 *::before {
@@ -9,6 +11,7 @@
     padding: 0;
     margin: 0;
 }
+
 body {
     min-height: 100dvh;
     display: flex;
@@ -16,6 +19,7 @@ body {
     align-items: center;
     background-color: rgb(240, 240, 240);
 }
+
 #project__container {
     height: 580px;
     width: 310px;
@@ -25,24 +29,29 @@ body {
     display: grid;
     grid-template-rows: auto 1fr auto;
 }
+
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 .5rem;
 }
-.time{
+
+.time {
     color: #fff;
     font-family: var(--main-font-family);
     font-size: 1.1rem;
 }
+
 .state img {
     width: 5.1rem;
 }
+
 .calculator__container {
     display: grid;
     grid-template-rows: 1fr auto;
 }
+
 .screen {
     color: #fff;
     font-family: var(--main-font-family);
@@ -54,15 +63,18 @@ header {
     width: 17.8rem;
     overflow: hidden;
 }
+
 .buttons__container {
     display: grid;
 }
+
 .buttons__row {
     display: flex;
     justify-content: space-between;
     margin: 0.25rem;
 }
-.btn{
+
+.btn {
     height: 4rem;
     width: 4rem;
     border: 0;
@@ -75,38 +87,63 @@ header {
     align-items: center;
     cursor: pointer;
 }
+
 .buttons__row:last-child .btn:first-child {
     flex-basis: 48%;
     border-radius: 2rem;
     padding-left: 1.5rem;
     justify-content: flex-start;
 }
-[data-number], [data-decimal] {
+
+[data-number],
+[data-decimal] {
     color: #fff;
     background-color: rgb(47, 47, 47);
 }
-[data-operation], [data-equals] {
+
+[data-operation],
+[data-equals] {
     font-size: 2.2rem;
     color: #fff;
     background-color: rgb(255, 146, 37);
 }
-[data-all-clear], [data-negative], [data-percent] {
+
+[data-all-clear],
+[data-negative],
+[data-percent] {
     background-color: rgb(174, 174, 174);
+    color: #000;
 }
-[data-all-clear], [data-percent] {font-size: 1.7rem;}
+
+[data-all-clear],
+[data-percent] {
+    font-size: 1.7rem;
+}
+
 [data-negative] {
     display: flex;
     justify-content: center;
     align-self: center;
 }
+
 [data-negative] span {
     font-size: 1.3rem;
     font-weight: 600;
     position: relative;
 }
-[data-negative] span:nth-child(2) {transform: rotate(15deg);}
-[data-negative] span:first-child {transform: translate(3px, -5px);}
-[data-negative] span:last-child {transform: translate(-3px, 5px);}
+
+[data-negative] span:nth-child(2) {
+    transform: rotate(15deg);
+}
+
+[data-negative] span:first-child {
+    transform: translate(3px, -5px);
+}
+
+[data-negative] span:last-child {
+    transform: translate(-3px, 5px);
+}
+
 .underline {
     width: 7.75rem;
     height: 0.2rem;
@@ -116,7 +153,11 @@ header {
     position: relative;
     transform: translateY(5px);
 }
-[data-operation] {transition: background 800ms ease, color 700ms ease;}
+
+[data-operation] {
+    transition: background 800ms ease, color 700ms ease;
+}
+
 .active__op {
     color: rgb(255, 146, 37);
     background-color: #fff;
